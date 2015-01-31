@@ -8,6 +8,8 @@
 
 namespace Hopeter1018\DoctrineExtension;
 
+use Hopeter1018\Framework\SystemPath;
+
 /**
  * Description of Cache
  *
@@ -49,7 +51,7 @@ class Cache
     public static function file($namespace)
     {
         $cache = new \Doctrine\Common\Cache\PhpFileCache(
-            \Zms5Library\Framework\SystemPath::storagePath($namespace)
+            SystemPath::storagePath($namespace)
         );
         $cache->setNamespace($namespace);
         return $cache;

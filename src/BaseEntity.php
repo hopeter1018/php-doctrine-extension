@@ -14,7 +14,7 @@ namespace Hopeter1018\DoctrineExtension;
  * @version $id$
  * @author peter.ho
  */
-class BaseEntity extends \Zms5Library\Framework\SuperClass implements \ArrayAccess
+class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAccess
 {
 
     private $additionalColumn = array ();

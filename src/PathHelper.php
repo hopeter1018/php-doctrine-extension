@@ -8,6 +8,8 @@
 
 namespace Hopeter1018\DoctrineExtension;
 
+use Hopeter1018\Framework\SystemPath;
+
 /**
  * Description of PathHelper
  *
@@ -33,7 +35,7 @@ final class PathHelper
      */
     public static function getEntitiesRoot($paths = null)
     {
-        $dirPath = \Zms5Library\Framework\SystemPath::doctrineFilesPath(static::FOLDER_ENTITIES, func_get_args());
+        $dirPath = SystemPath::doctrineFilesPath(static::FOLDER_ENTITIES, func_get_args());
         return ($paths === null) ? $dirPath : rtrim($dirPath, '/');
     }
 
@@ -48,7 +50,7 @@ final class PathHelper
      */
     public static function getRepositoriesRoot($paths = null)
     {
-        $dirPath = \Zms5Library\Framework\SystemPath::doctrineFilesPath(static::FOLDER_REPOSITORIES, func_get_args());
+        $dirPath = SystemPath::doctrineFilesPath(static::FOLDER_REPOSITORIES, func_get_args());
         return ($paths === null) ? $dirPath : rtrim($dirPath, '/');
     }
 
@@ -63,7 +65,7 @@ final class PathHelper
      */
     public static function getYamlRoot($paths = null)
     {
-        $dirPath = \Zms5Library\Framework\SystemPath::doctrineFilesPath(static::FOLDER_YAML, func_get_args());
+        $dirPath = SystemPath::doctrineFilesPath(static::FOLDER_YAML, func_get_args());
         return ($paths === null) ? $dirPath : rtrim($dirPath, '/');
     }
 
@@ -78,7 +80,7 @@ final class PathHelper
      */
     public static function getProxiesRoot($paths = null)
     {
-        $dirPath = \Zms5Library\Framework\SystemPath::doctrineFilesPath(static::FOLDER_PROXIES, func_get_args());
+        $dirPath = SystemPath::doctrineFilesPath(static::FOLDER_PROXIES, func_get_args());
         return ($paths === null) ? $dirPath : rtrim($dirPath, '/');
     }
 
