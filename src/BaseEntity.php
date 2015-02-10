@@ -78,7 +78,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
     /**
      * 
      * @param type $alias
-     * @return Zms5\Common\DoctrineAlias
+     * @return Alias
      */
     public static function alias($alias = null)
     {

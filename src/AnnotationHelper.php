@@ -33,8 +33,9 @@ final class AnnotationHelper
     private static function getReader()
     {
         AnnotationRegistry::registerAutoloadNamespaces(array (
+//            UserAccessControl::CLASSNAME => APP_WORKBENCH_ROOT . "zms5library/framework/_psr0"
         ));
-        
+
         return new CachedReader(
             new IndexedReader(new AnnotationReader()),
             Cache::instance(__CLASS__),
