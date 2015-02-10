@@ -109,7 +109,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
         if ($select instanceof DoctrineAlias) {
             $select = $select->getAlias();
         }
-        return self::dql()->from(get_class(new static), $alias, $indexBy)->select($select);
+        return Connection::dql()->from(get_class(new static), $alias, $indexBy)->select($select);
     }
 
     /**
@@ -120,7 +120,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      */
     public static function deleteFrom($alias = 't')
     {
-        return self::dql()->delete(get_class(new static), $alias);
+        return Connection::dql()->delete(get_class(new static), $alias);
     }
 
     /**
@@ -131,7 +131,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      */
     public static function updateFrom($alias = 't')
     {
-        return self::dql()->update(get_class(new static), $alias);
+        return Connection::dql()->update(get_class(new static), $alias);
     }
 
 // </editor-fold>
@@ -142,16 +142,16 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      */
     public static function repo()
     {
-        return Connection::entityManager()->getRepository(static::className());
+        return Connection::em()->getRepository(static::className());
     }
 
     /**
      * One function to insert / update
-     * @return \Zms5\Common\DoctrineBase
+     * @return static|self|BaseEntity
      */
     public function saveEx($delay = false)
     {
-        $entityManager = Connection::entityManager();
+        $entityManager = Connection::em();
 
         if ($this->getPrimaryKey() === null) {
             $entityManager->persist($this);
@@ -166,13 +166,13 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
 
     public function delete()
     {
-        Connection::entityManager()->remove($this);
-        Connection::entityManager()->flush();
+        Connection::em()->remove($this);
+        Connection::em()->flush();
     }
 
     private function getPrimaryKey()
     {
-        return $this[Connection::entityManager()->getClassMetadata(get_class($this))->getSingleIdentifierFieldName()];
+        return $this[Connection::em()->getClassMetadata(get_class($this))->getSingleIdentifierFieldName()];
     }
 
     /**

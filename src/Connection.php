@@ -133,4 +133,66 @@ final class Connection
         return self::$entityManager;
     }
 
+    /**
+     * Return new QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public static function dql()
+    {
+        return self::$entityManager->createQueryBuilder();
+    }
+
+// <editor-fold defaultstate="collapsed" desc="Transaction Functions">
+
+    /**
+     * try: ($conn, $em)<br />
+     * catch: ($conn, $em, $ex)<br />
+     * finally: ($conn, $em, $ex)<br />
+     * 
+     * @deprecated since version number Please use netbean-template "p_trans" to generate try {} catch {}
+     * @param \Closure $try lambda function with one parameter $conn
+     * @param \Closure $catch
+     * @param \Closure $finally
+     */
+    public static function trans(\Closure $try, \Closure $catch = null, \Closure $finally = null)
+    {
+        $conn = self::$conn;
+        $conn->beginTransaction();
+        $catches = false;
+        $ex = null;
+        try {
+            $result = $try($conn, self::$entityManager);
+
+            self::$entityManager->flush();
+            $conn->commit();
+        } catch (Exception $ex) {
+            $conn->rollback();
+            $catches = true;
+            if (APP_IS_DEV) {
+                header('dt_trans: ' . $ex->getMessage());
+            }
+            if ($catch !== null) {
+                $result = $catch($conn, self::$entityManager, $ex);
+            } else {
+                $result = null;
+            }
+        }
+
+        if ($finally !== null) {
+            $finally($conn, self::$entityManager, $ex);
+        }
+
+        self::$entityManager->close();
+        self::$entityManager = null;
+        $conn->close();
+
+        if ($catches and isset($ex)) {
+            //  TODO
+        }
+
+        return $result;
+    }
+
+// </editor-fold>
+
 }
