@@ -168,6 +168,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
     {
         Connection::em()->remove($this);
         Connection::em()->flush();
+        return true;
     }
 
     private function getPrimaryKey()
@@ -181,7 +182,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      */
     public function getAllFieldNames()
     {
-        Connection::em()->getClassMetadata(get_class($this))->getFieldNames();
+        return Connection::em()->getClassMetadata(get_class($this))->getFieldNames();
     }
 
     /**

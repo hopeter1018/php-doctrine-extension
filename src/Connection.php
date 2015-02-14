@@ -60,8 +60,8 @@ final class Connection
     {
         $config = Setup::createYAMLMetadataConfiguration(array(PathHelper::getYamlRoot()), $isDev);
         $config->setProxyDir(PathHelper::getProxiesRoot());
-        $config->setProxyNamespace('DoctrineORMModule\Proxy');
-        $config->setAutoGenerateProxyClasses(\Doctrine\Common\Proxy\AbstractProxyFactory::AUTOGENERATE_NEVER);
+//        $config->setProxyNamespace('DoctrineORMModule\Proxy');
+//        $config->setAutoGenerateProxyClasses(\Doctrine\Common\Proxy\AbstractProxyFactory::AUTOGENERATE_NEVER);
         static::registerMySqlStringFunction($config);
 
         $dbh = new PDO("mysql:host={$host};port={$port};dbname={$database}", $user, $password, array (PDO::ATTR_PERSISTENT => true,));

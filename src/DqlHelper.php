@@ -25,7 +25,7 @@ final class DqlHelper
      */
     protected static function dql()
     {
-        return Connection::entityManager()->createQueryBuilder();
+        return Connection::em()->createQueryBuilder();
     }
 
     /**
@@ -78,17 +78,17 @@ final class DqlHelper
             switch ($param->getType()) {
                 case 'date':
                     /* @var $value \DateTime */
-                    $value = DoctrineBase::conn()->quote($value->format(APP_MYSQL_DATE));
+                    $value = Connection::conn()->quote($value->format(APP_MYSQL_DATE));
                     break;
                 case 'datetime':
                     /* @var $value \DateTime */
-                    $value = DoctrineBase::conn()->quote($value->format(APP_MYSQL_DATE_TIME));
+                    $value = Connection::conn()->quote($value->format(APP_MYSQL_DATE_TIME));
                     break;
                 case 'integer':
                 case 'double':
                     break;
                 default:
-                    $value = DoctrineBase::conn()->quote($value);
+                    $value = Connection::conn()->quote($value);
                     break;
             }
 
