@@ -19,6 +19,9 @@ use Hopeter1018\DoctrineExtension\Exceptions\ParameterTypeException;
 final class DqlHelper
 {
 
+    const APP_MYSQL_DATE = 'Y-m-d';
+    const APP_MYSQL_DATE_TIME = 'Y-m-d h:i:s';
+
     /**
      * Return a new instance of query-builder from the static stored entityManager
      * @return \Doctrine\ORM\QueryBuilder
@@ -78,11 +81,11 @@ final class DqlHelper
             switch ($param->getType()) {
                 case 'date':
                     /* @var $value \DateTime */
-                    $value = Connection::conn()->quote($value->format(APP_MYSQL_DATE));
+                    $value = Connection::conn()->quote($value->format(static::APP_MYSQL_DATE));
                     break;
                 case 'datetime':
                     /* @var $value \DateTime */
-                    $value = Connection::conn()->quote($value->format(APP_MYSQL_DATE_TIME));
+                    $value = Connection::conn()->quote($value->format(static::APP_MYSQL_DATE_TIME));
                     break;
                 case 'integer':
                 case 'double':
