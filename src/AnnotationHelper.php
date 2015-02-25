@@ -32,11 +32,12 @@ final class AnnotationHelper
      */
     private static function getReader()
     {
-        return new CachedReader(
-            new IndexedReader(new AnnotationReader()),
-            Cache::instance(__CLASS__),
-            false
-        );
+        return new IndexedReader(new AnnotationReader());
+//        return new CachedReader(
+//            new IndexedReader(new AnnotationReader()),
+//            Cache::instance(__CLASS__),
+//            false
+//        );
     }
 
     /**
