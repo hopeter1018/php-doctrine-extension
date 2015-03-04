@@ -145,6 +145,20 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
         return Connection::em()->getRepository(static::className());
     }
 
+    public function bulkBy($record)
+    {
+        if (!is_object($record) and !is_array($record)) {
+            throw new \Exception("param \$record MUST be an Object or Array. Given: " . var_export($record, true));
+        }
+        foreach ($record as $fieldName => $fieldValue) {
+            if (method_exists($this, 'set'. ucfirst($fieldName))) {
+                \Hopeter1018\Helper\HttpResponse::addMessageDev($fieldName, 'bulkBy');
+                $this->{'set'. ucfirst($fieldName)}($fieldValue);
+            }
+        }
+        return $this;
+    }
+
     /**
      * One function to insert / update
      * @return static|self|BaseEntity

@@ -150,7 +150,7 @@ final class Connection
      * finally: ($conn, $em, $ex)<br />
      * 
      * @deprecated since version number Please use netbean-template "p_trans" to generate try {} catch {}
-     * @param \Closure $try lambda function with one parameter $conn
+     * @param \Closure $try lambda function with $conn, $em
      * @param \Closure $catch
      * @param \Closure $finally
      */
@@ -167,9 +167,11 @@ final class Connection
             $conn->commit();
         } catch (Exception $ex) {
             $conn->rollback();
+            error_log($ex->getMessage() . "\r\n" . $ex->getTraceAsString());
+
             $catches = true;
             if (APP_IS_DEV) {
-                header('dt_trans: ' . $ex->getMessage());
+                header('dt-trans: ' . $ex->getMessage());
             }
             if ($catch !== null) {
                 $result = $catch($conn, self::$entityManager, $ex);
@@ -185,10 +187,6 @@ final class Connection
         self::$entityManager->close();
         self::$entityManager = null;
         $conn->close();
-
-        if ($catches and isset($ex)) {
-            //  TODO
-        }
 
         return $result;
     }
