@@ -157,7 +157,9 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
             throw new \Exception("param \$record MUST be an Object or Array. Given: " . var_export($record, true));
         }
         foreach ($record as $fieldName => $fieldValue) {
-            if (method_exists($this, 'set'. ucfirst($fieldName))) {
+            if (method_exists($this, 'set'. ucfirst($fieldName))
+                and strpos($fieldName, 'Date') === false
+            ) {
                 \Hopeter1018\Helper\HttpResponse::addMessageDev($fieldName, 'bulkBy');
                 $this->{'set'. ucfirst($fieldName)}($fieldValue);
             }
