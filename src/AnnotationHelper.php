@@ -10,9 +10,8 @@ namespace Hopeter1018\DoctrineExtension;
 
 use ReflectionClass;
 use ReflectionMethod;
-use Doctrine\Common\Annotations\AnnotationRegistry;
+use ReflectionProperty;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\IndexedReader;
 
 /**
@@ -55,11 +54,24 @@ final class AnnotationHelper
      * Get array of annotations
      * 
      * @param string $className
+     * @param string $methodName
      * @return \stdClass[]|array
      */
     public static function byMethod($className, $methodName)
     {
         return static::getReader()->getMethodAnnotations(new ReflectionMethod($className, $methodName));
+    }
+
+    /**
+     * Get array of annotations
+     * 
+     * @param string $className
+     * @param string $propertyName
+     * @return \stdClass[]|array
+     */
+    public static function byProperty($className, $propertyName)
+    {
+        return static::getReader()->getPropertyAnnotations(new ReflectionProperty($className, $propertyName));
     }
 
     /**
@@ -106,4 +118,5 @@ final class AnnotationHelper
         }
         return $found;
     }
+
 }
