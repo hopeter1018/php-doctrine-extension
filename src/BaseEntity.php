@@ -145,6 +145,12 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
         return Connection::em()->getRepository(static::className());
     }
 
+    /**
+     * 
+     * @param type $record
+     * @return \Hopeter1018\DoctrineExtension\BaseEntity|static
+     * @throws \Exception
+     */
     public function bulkBy($record)
     {
         if (!is_object($record) and !is_array($record)) {
