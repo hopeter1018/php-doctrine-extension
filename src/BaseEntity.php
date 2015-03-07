@@ -160,8 +160,13 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
             if (method_exists($this, 'set'. ucfirst($fieldName))
                 and strpos($fieldName, 'Date') === false
             ) {
-                \Hopeter1018\Helper\HttpResponse::addMessageDev($fieldName, 'bulkBy');
                 $this->{'set'. ucfirst($fieldName)}($fieldValue);
+            } elseif ($fieldName === 'updateDate') {
+                $this->setUpdateDate(\Hopeter1018\Helper\Date::requestTime());
+            } elseif ($fieldName === 'createDate') {
+                if ($this->getPrimaryKey() == null) {
+                    $this->setCreateDate(\Hopeter1018\Helper\Date::requestTime());
+                }
             }
         }
         return $this;
