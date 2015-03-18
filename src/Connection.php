@@ -135,11 +135,12 @@ final class Connection
 
     /**
      * Return new QueryBuilder
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder|QueryBuilderExtended
      */
     public static function dql()
     {
-        return self::$entityManager->createQueryBuilder();
+//        return self::$entityManager->createQueryBuilder();
+        return new QueryBuilderExtended(self::$entityManager);
     }
 
 // <editor-fold defaultstate="collapsed" desc="Transaction Functions">

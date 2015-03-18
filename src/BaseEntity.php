@@ -82,7 +82,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      */
     public static function alias($alias = null)
     {
-        return new Alias($alias);
+        return new Alias($alias, static::className());
     }
 
     public function getAlias()
@@ -99,16 +99,14 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      * @param string $select t || t.id
      * @param string $alias t
      * @param string $indexBy t.id
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder|QueryBuilderExtended
      */
-    public static function selectFrom($select = 't', $alias = 't', $indexBy = null)
+    public static function selectFrom($select = null, $alias = null, $indexBy = null)
     {
-        if ($alias instanceof DoctrineAlias) {
-            $alias = $alias->getAlias();
-        }
-        if ($select instanceof DoctrineAlias) {
-            $select = $select->getAlias();
-        }
+        $alias = ($alias === null) ? static::alias() : $alias;
+        $select = ($select === null) ? static::alias() : $select;
+        $alias = ($alias instanceof Alias) ? $alias->getAlias() : $alias;
+        $select  = ($select instanceof Alias) ? $select->getAlias() : $select;
         return Connection::dql()->from(get_class(new static), $alias, $indexBy)->select($select);
     }
 
@@ -116,7 +114,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      * Shortcut to DQL -> delete
      * 
      * @param string $alias
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder|QueryBuilderExtended
      */
     public static function deleteFrom($alias = 't')
     {
@@ -127,7 +125,7 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      * Shortcut to DQL -> update
      * 
      * @param string $alias
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder|QueryBuilderExtended
      */
     public static function updateFrom($alias = 't')
     {

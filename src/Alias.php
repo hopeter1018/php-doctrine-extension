@@ -20,15 +20,19 @@ class Alias
     /** @var string */
     private $alias = '';
 
+    /** @var string */
+    private $entityName = '';
+
     /**
      * index for suffix to those non-declared alias
      * @var int
      */
     private static $aliasIndex = 0;
 
-    public function __construct($alias = null)
+    public function __construct($alias = null, $entityName)
     {
-        $this->alias = ($alias === null) ? 't' . ( ++static::$aliasIndex) : $alias;
+        $this->alias = ($alias === null) ? 'alias_' . ( ++static::$aliasIndex) : $alias;
+        $this->entityName = $entityName;
     }
 
     /**
@@ -126,5 +130,15 @@ class Alias
     {
         return $this->alias;
     }
+
+    /**
+     * Return $this->entityName;
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
+
 
 }
