@@ -146,4 +146,10 @@ final class DqlHelper
         return $newDql;
     }
 
+    public static function getBindingParameter($sql)
+    {
+        $matches = array();
+        preg_match_all("|:([a-z0-9_])+|i", $sql, $matches);
+        return array_values($matches[0]);
+    }
 }

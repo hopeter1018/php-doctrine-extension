@@ -86,6 +86,13 @@ class Alias
             $result = $this->alias . '.' . lcfirst(substr($name, 1)) . ' ' . implode('', $arguments);
         } elseif (substr($name, 0, 2) === 'as') {
             $result = $this->alias . '.' . lcfirst(substr($name, 2)) . ' AS ' . $arguments[0];
+        } elseif (substr($name, 0, 2) === 'nq') {
+            $result = Connection::em()->getRepository($this->entityName)
+                ->createNamedQuery(lcfirst(substr($name, 2)));
+            $param = DqlHelper::getBindingParameter($result->getDQL());
+            foreach ($arguments as $index => $argument) {
+                $result->setParameter($param[$index], $argument);
+            }
         } else {
             throw new \Exception('Alias fatal error');
         }
