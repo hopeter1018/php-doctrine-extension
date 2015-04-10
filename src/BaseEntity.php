@@ -103,8 +103,8 @@ class BaseEntity extends \Hopeter1018\Framework\SuperClass implements \ArrayAcce
      */
     public static function selectFrom($select = null, $alias = null, $indexBy = null)
     {
-        $alias = ($alias === null) ? static::alias() : $alias;
-        $select = ($select === null) ? static::alias() : $select;
+        $alias = ($alias === null) ? static::alias('t') : $alias;
+        $select = ($select === null) ? static::alias('t') : $select;
         $alias = ($alias instanceof Alias) ? $alias->getAlias() : $alias;
         $select  = ($select instanceof Alias) ? $select->getAlias() : $select;
         return Connection::dql()->from(get_class(new static), $alias, $indexBy)->select($select);
