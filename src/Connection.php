@@ -70,8 +70,8 @@ final class Connection
         $evm = new \Doctrine\Common\EventManager;
 
         // Table Prefix
-        $tablePrefix = new TablePrefix($prefix);
-        $evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $tablePrefix);
+//        $tablePrefix = new TablePrefix($prefix);
+//        $evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $tablePrefix);
 
         // obtaining the entity manager
         $entityManager = EntityManager::create(
@@ -97,6 +97,7 @@ final class Connection
         $config->addCustomStringFunction('DATE_FORMAT', 'Hopeter1018\DoctrineExtension\MySql\DateFormat');
         $config->addCustomStringFunction('GROUPCONCAT', 'Hopeter1018\DoctrineExtension\MySql\GroupConcat');
         $config->addCustomStringFunction('DATE', 'Hopeter1018\DoctrineExtension\MySql\Date');
+        $config->addCustomStringFunction('RAND', 'Hopeter1018\DoctrineExtension\MySql\Rand');
     }
 
     /**
